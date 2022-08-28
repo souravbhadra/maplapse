@@ -4,3 +4,5 @@ docs/images/logo.pptx
 
 data/corn_yield/*
 data/covid/*
+
+maplapse/__pycache__/*
