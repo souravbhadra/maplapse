@@ -1,0 +1,10 @@
+fiona
+pyproj
+rtree
+shapely
+geopandas
+matplotlib
+pandas
+imageio
+imageio-ffmpeg
+tqdm
