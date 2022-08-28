@@ -10,11 +10,22 @@ Example 1             |  Example 2
 ![maplapse-ex1](https://raw.githubusercontent.com/souravbhadra/maplapse/master/docs/images/corn_yield.gif)  |  ![maplapse-ex2](https://raw.githubusercontent.com/souravbhadra/maplapse/master/docs/images/covid.gif)
 
 
-
-
-
-
 ## How to Use
+The `Animator` object of `maplapse` can easily create the animations. Here is a code example:
+
+```
+anim = Animator(shape='/county_shape.shp',
+                value='/century_data.csv',
+                time_column='Year',
+                data_column='Value',
+                shape_unique_column='ST_CNT',
+                map_type='choropleth',
+                out_path='/animation.gif')
+anim.animate()
+```
+
+## Installation
+Simply use `pip install maplapse`. The library has dependencies to 
 
 
 
