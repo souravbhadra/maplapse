@@ -1,3 +1,6 @@
 *.DS_Store
 
 docs/images/logo.pptx
+
+data/corn_yield/*
+data/covid/*
