@@ -16,6 +16,9 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 class Animator():
+    """
+    The animator object to create the timelapse.
+    """
     
     def __init__(
         self,
@@ -31,6 +34,59 @@ class Animator():
         scale_factor=None,
         **kwargs
     ):
+        """The initialization of `Animator` object.
+
+        Parameters
+        ----------
+        shape : str
+            The path of the shapefile.
+        value : str
+            The path of the csv file.
+        time_column : str
+            The column in the csv file (`value`) that represents the 
+            time or date.
+        data_column : str
+            The column in the csv file (`value`) that represents the 
+            value to map.
+        shape_unique_column : str
+            The column in the shapefile (`shape`) that can be uniquely
+            mapped to the csv file.
+        out_path : str
+            The path of the output animation file. `maplapse` 
+            currently supports output file as either `.gif` or `.mp4`.
+        map_type : str, optional
+            Type of output map. It can be either `choropleth` or 
+            `proportional_circle`. If `choropleth`, then the animation
+            will include change of a colormap. If type is
+            `proportional_circle`, then the values will be 
+            proportionally increased as the radius of circles, by 
+            default 'choropleth'
+        value_unique_column : str, optional
+            The column in the csv gile (`value`) that can be uniquely
+            mapped to the shapfile. Only required when the unique 
+            column for shapefile and value csv is different. If they 
+            have the same column name, then the value_unique_column 
+            will be automatically set as the one as the 
+            shape_unique_column, by default None
+        temporal_scaling : bool, optional
+            If `True`, then the temporal values will be scaled to the
+            maximum and minimum values of the entire value csv file. 
+            Otherwise, each timeframe plot of the animation will be 
+            scaled to its own timefame, by default True
+        scale_factor : float, optional, required when 
+        `map_type=proportional_cricle`
+            A constant value to be multiplied with the 
+            `proportional_circle` radius to adjust its extent. If the 
+            circles are too large and expand beyond the map boundary,
+            then use `scale_factor` values from 0to 1(e.g., 0.05), 
+            by default None
+
+        Raises
+        ------
+        ValueError
+            The `scale_factor` must be specified when plotting 
+            `proportional_circle`.
+        """
         self.time_column = time_column
         self.shape_unique_column = shape_unique_column
         if value_unique_column is None:
@@ -278,6 +334,22 @@ class Animator():
         self,
         frame=0
     ):
+        """View a selected frame.
+        
+        Useful to visualize one frame and then update the mapping
+        parameters to adjust the visualization options in the
+        `Animator` object.
+
+        Parameters
+        ----------
+        frame : int, optional
+            The frame to temporarily view, by default 0
+
+        Returns
+        -------
+        matplotlib.figure
+            A figure.
+        """
         # Check if the join field dtype is same or not
         self.check_join_dtype()
         # Pick a time
@@ -311,6 +383,7 @@ class Animator():
         self,
         **kwargs,
     ):
+        
         # Check if the join field dtype is same or not
         self.check_join_dtype()
         # Loop through each unique time
