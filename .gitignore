@@ -7,8 +7,8 @@ data/covid/*
 
 maplapse/__pycache__/*
 
-build/*
-dist/*
+build
+dist
 *.egg-info
 
 examples/test.ipynb
