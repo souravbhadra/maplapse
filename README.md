@@ -1,4 +1,6 @@
-https://img.shields.io/github/license/souravbhadra/maplapse
+![check-status](https://img.shields.io/github/checks-status/souravbhadra/maplapse/main)
+![license](https://img.shields.io/github/license/souravbhadra/maplapse)
+![downloads](https://img.shields.io/github/downloads/souravbhadra/maplapse/total)
 
 
 ![maplapse-logo](https://raw.githubusercontent.com/souravbhadra/maplapse/master/docs/images/logo.gif)
