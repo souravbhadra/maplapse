@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name="maplapse",
-    version="0.0.6b1",
+    version="0.0.6b2",
     author="Sourav Bhadra",
     author_email='sbhadra019@gmail.com',
     description="A python library to create animated timelapse of maps",
