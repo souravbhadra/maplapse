@@ -6,3 +6,7 @@ data/corn_yield/*
 data/covid/*
 
 maplapse/__pycache__/*
+
+build/*
+dist/*
+*.egg-info
