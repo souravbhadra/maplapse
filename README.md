@@ -31,7 +31,10 @@ Output:
 ![maplapse-ex2](https://raw.githubusercontent.com/souravbhadra/maplapse/master/docs/images/covid.gif)
 
 ## Installation
-Simply use `pip install maplapse`. The library has dependencies to 
+Simply use `pip install maplapse`.
+
+## Problems
+If you face any issues with the library, please create an issue by following up the steps [here](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue)
 
 
 
