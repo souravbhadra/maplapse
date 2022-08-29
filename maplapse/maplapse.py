@@ -9,7 +9,7 @@ Author Email: sbhadra019@gmail.com
 import os
 import glob
 import shutil
-import time
+import tempfile
 import collections
 import geopandas as gpd
 import pandas as pd
@@ -126,7 +126,8 @@ class Animator():
         # Get the unique timestamps from the time data
         self.times = np.unique(self.temporal[self.time_column].values)
         self.out_path = out_path
-        self.temp_dir = self.create_temp_dir()
+        self.temp_dir = None
+        #self.temp_dir = self.create_temp_dir()
         self.map_type = map_type
         self.temporal_scaling = temporal_scaling
         self.counter = None # To be used for counting timeframes
@@ -419,21 +420,23 @@ class Animator():
         # Check if the join field dtype is same or not
         self.check_join_dtype()
         # Loop through each unique time
-        for i, time in tqdm(enumerate(self.times), total=self.times.shape[0]):
-            join = self.join_shape_temporal(time)
-            self.counter = i
-            # Matplotlib
-            self.plot_frame(time, join, False)
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            self.temp_dir = tmpdirname
+            for i, time in tqdm(enumerate(self.times), total=self.times.shape[0]):
+                join = self.join_shape_temporal(time)
+                self.counter = i
+                # Matplotlib
+                self.plot_frame(time, join, False)
             
-        if "duration" not in kwargs.keys():
-            kwargs["duration"] = 0.5
-        if "fps" not in kwargs.keys():
-            kwargs["fps"] = 20
-        
-        file_type = os.path.basename(self.out_path).split('.')[-1]
-        if file_type == 'gif':
-            self.save_animation(duration=kwargs["duration"])
-        elif file_type == 'mp4':
-            self.save_animation(fps=kwargs["fps"])
+            if "duration" not in kwargs.keys():
+                kwargs["duration"] = 0.5
+            if "fps" not in kwargs.keys():
+                kwargs["fps"] = 20
             
-        shutil.rmtree(self.temp_dir)
+            file_type = os.path.basename(self.out_path).split('.')[-1]
+            if file_type == 'gif':
+                self.save_animation(duration=kwargs["duration"])
+            elif file_type == 'mp4':
+                self.save_animation(fps=kwargs["fps"])
+            
+        #shutil.rmtree(self.temp_dir)

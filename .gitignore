@@ -10,3 +10,5 @@ maplapse/__pycache__/*
 build/*
 dist/*
 *.egg-info
+
+examples/test.ipynb
