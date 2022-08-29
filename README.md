@@ -1,3 +1,6 @@
+https://img.shields.io/github/license/souravbhadra/maplapse
+
+
 ![maplapse-logo](https://raw.githubusercontent.com/souravbhadra/maplapse/master/docs/images/logo.gif)
 
 `MapLapse` is a Python-based library to create animated timelapse maps from given shapefiles. It is mainly built on top of `geopandas` and `matplotlib`, along with other open-source geospatial packages.
