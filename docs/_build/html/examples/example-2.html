@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map) &mdash; maplapse 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="maplapse package" href="../maplapse.html" />
+    <link rel="prev" title="Example 1: Corn Yield Timelapse in the Midwest (Choropleth Map)" href="example-1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> maplapse
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="example-1.html">Example 1: Corn Yield Timelapse in the Midwest (Choropleth Map)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#datasets">Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#animation">Animation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../maplapse.html">MapLapse API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">maplapse</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Examples</a> &raquo;</li>
+      <li>Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/example-2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-2-covid-timelapse-of-2020-21-in-the-us-proportional-circle-map">
+<h1>Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)<a class="headerlink" href="#example-2-covid-timelapse-of-2020-21-in-the-us-proportional-circle-map" title="Permalink to this heading"></a></h1>
+<p>Other than choropleth maps, we can also create animations of
+Proportional Circle maps. Proportional circle maps (or graduated symbol
+maps) are an awesome way to demonstrate rapid change of events based on
+the proportional shift of the circle. COVID cases or number of deaths
+can be an excellent example to showcase such use cases. In this example,
+we will utilize the COVID cases data per county of the US in 2020.</p>
+<section id="datasets">
+<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this heading"></a></h2>
+<p>The dataset for this example can be downloaded from
+<a class="reference external" href="https://drive.google.com/drive/folders/1DVn2wk-plUv_WFUbiI7NMkb7mLCdnmH5?usp=sharing">here</a>.
+You will find a shapefile named <code class="docutils literal notranslate"><span class="pre">county_shape.shp</span></code> (which is
+downloaded from <a class="reference external" href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html">TIGER Census
+dataset</a>)
+and a csv file called <code class="docutils literal notranslate"><span class="pre">county_2020.csv</span></code> (downloaded from <a class="reference external" href="https://github.com/nytimes/covid-19-data">New York
+Times COVID Repository</a>).
+For the unique ID, we can rely on the <code class="docutils literal notranslate"><span class="pre">FIP</span></code> code specified in both
+datasets. FIP is a unique code that represents every unique county in
+the US. If there was no FIP code available, we can always create a
+unique ID by concatenating State name and County name together like
+Example 1. That would require some extra steps before proceeding with
+this example.</p>
+</section>
+<section id="animation">
+<h2>Animation<a class="headerlink" href="#animation" title="Permalink to this heading"></a></h2>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">maplapse.maplapse</span> <span class="kn">import</span> <span class="n">Animator</span>
+</pre></div>
+</div>
+<p>The only difference in this case would be defining the <code class="docutils literal notranslate"><span class="pre">map_type</span></code> to
+<code class="docutils literal notranslate"><span class="pre">proportional_circle</span></code>. We can also specify some kwargs related to
+<code class="docutils literal notranslate"><span class="pre">proportional_circle</span></code> map, like the color of the circles, the
+transparancey, etc.</p>
+<p>An important parameter for <code class="docutils literal notranslate"><span class="pre">proportional_circle</span></code> map is the
+<code class="docutils literal notranslate"><span class="pre">scale_factor</span></code>. The <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code> is a constant value that reduces
+or increases the radius of circle. If no <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code> is defined,
+then the radius of the circle would surpass the map. Therefore, you need
+to play with several values for this <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code> and get an optimal
+value. However, in future, the package will incorporate automatic
+determination of the <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code>.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/Work/maplapse/data/covid/cb_2018_us_county_20m.shp&#39;</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/Work/maplapse/data/covid/county_2020.csv&#39;</span><span class="p">,</span>
+                <span class="n">time_column</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span>
+                <span class="n">data_column</span><span class="o">=</span><span class="s1">&#39;cases&#39;</span><span class="p">,</span>
+                <span class="n">shape_unique_column</span><span class="o">=</span><span class="s1">&#39;FIP&#39;</span><span class="p">,</span>
+                <span class="n">value_unique_column</span><span class="o">=</span><span class="s1">&#39;fips&#39;</span><span class="p">,</span>
+                <span class="n">map_type</span><span class="o">=</span><span class="s1">&#39;proportional_circle&#39;</span><span class="p">,</span>
+                <span class="n">out_path</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/Work/maplapse/data/covid/animation.gif&#39;</span><span class="p">,</span>
+                <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span>
+                <span class="n">scale_factor</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+                <span class="n">temporal_divisions</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                <span class="n">map_title</span><span class="o">=</span><span class="s1">&#39;COVID Cases in US at 2020&#39;</span><span class="p">,</span>
+                <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Arial&#39;</span><span class="p">,</span>
+                <span class="n">font_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                <span class="n">poly_line_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+                <span class="n">poly_line_width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                <span class="n">circle_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                <span class="n">circle_alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">view_frame</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/output_2_1.png" src="../_images/output_2_1.png" />
+<p>There is no circle visible in the first frame. That is because the first
+values were may be very low. Therefore, lets increase the value to see
+if we can see any circle and if we are happy with the configurations.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">view_frame</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/output_2_2.png" src="../_images/output_2_2.png" />
+<p>It looks good. So let’s complete the animation process.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>100%|██████████| 346/346 [06:00&lt;00:00,  1.04s/it]
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example-1.html" class="btn btn-neutral float-left" title="Example 1: Corn Yield Timelapse in the Midwest (Choropleth Map)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../maplapse.html" class="btn btn-neutral float-right" title="maplapse package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sourav Bhadra.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

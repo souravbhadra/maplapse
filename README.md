@@ -1,7 +1,11 @@
 ![maplapse-logo](https://raw.githubusercontent.com/souravbhadra/maplapse/master/docs/images/logo.gif)
 
-## Key Use
-`MapLapse` can create animated maps from a given shapefile and associated temporal data. The outputs can be either gif or mp4.
+`MapLapse` is a Python-based library to create animated timelapse maps from given shapefiles. It is mainly built on top of `geopandas` and `matplotlib`, along with other open-source geospatial packages.
+
+## Key Features
+- Animated **choropleth** maps
+- Animated **proportional circle** maps
+- Supports output in `.gif` and `.mp4`
 
 ## Example
 The `Animator` object of `maplapse` can easily create the animations. Here is a code snippet:

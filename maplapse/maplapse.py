@@ -1,6 +1,12 @@
 """
 The main module of `maplapse` library.
 
+MapLapse simply uses an `Animator` object that defines the basic
+configuration of the maps to be created. It requires a shapefile, a
+csv file containing time-wise values for some theme, and a common id
+that can map the connection between the shapefile and the csv file. 
+Then a method called `animate` can create an animated gif or mp4 file.
+
 Author: Sourav Bhadra
 Author Email: sbhadra019@gmail.com
 """
@@ -94,6 +100,17 @@ class Animator():
     Raises:
         ValueError: The `scale_factor` must be specified when 
             plotting `proportional_circle`.
+            
+    Examples:
+        >>> from maplapse import Animator
+        >>> anim = Animator(shape='shapefile_path.shp',
+                            value='csv{path}.csv',
+                            time_column='time_column',
+                            data_column='data_column',
+                            shape_unique_column='unique_column',
+                            map_type='choropleth',
+                            out_path='animation.gif')
+        >>> anim.animate(duration=0.5)
     """
     
     def __init__(
@@ -179,19 +196,18 @@ class Animator():
         self.circle_alpha = kwargs["circle_alpha"]
         
         
-        
-
-    
-    def create_temp_dir(
-        self
-    ):
-        temp_dir = os.path.join(os.path.dirname(self.out_path),
-                                f'temp')
-        os.makedirs(temp_dir, exist_ok=True) 
-        return temp_dir
     
     
     def sort_filenames(self, filenames):
+        """Sort the filenames of the exported figures according to 
+        their integer filenames.
+        
+        Args:
+            filenames (list(str)): Path of flinames.
+            
+        Returns:
+            list: List of sorted filenames.
+        """
         data = {}
         for filename in filenames:
             data[int(os.path.basename(filename).split('.')[0])] = filename
@@ -201,6 +217,12 @@ class Animator():
         
     
     def save_animation(self, **kwargs):
+        """Saves the files found in tempdir as animation.
+        
+        Key Args:
+            duration (float): Duration of gif frames.
+            fps (int): Frames per second of mp4 file.
+        """
         filenames = glob.glob(os.path.join(self.temp_dir, '*.png'))
         filenames = self.sort_filenames(filenames)
         with imageio.get_writer(self.out_path, mode='I', **kwargs) as writer:
@@ -214,6 +236,12 @@ class Animator():
         gdf,
         ax
     ):
+        """Creates a choropleth map axis.
+        
+        Args:
+            gdf (geopandas.GeoDataFrame): The geodataframe object.
+            ax (matplotlib.axis): The ax, where the map will be drawn.
+        """
         self.shape.plot(
             ax=ax,
             facecolor="none",
@@ -249,6 +277,12 @@ class Animator():
         gdf,
         ax
     ):
+        """Creates a proportional circle map axis.
+        
+        Args:
+            gdf (geopandas.GeoDataFrame): The geodataframe object.
+            ax (matplotlib.axis): The ax, where the map will be drawn.
+        """
         warnings.filterwarnings("ignore")
     
         self.shape.plot(
@@ -275,6 +309,15 @@ class Animator():
         join,
         for_view=True
     ):
+        """Plot a single matplotlib figure as frame.
+        
+        Args:
+            time (timedata[ns]): The numpy timedelta object.
+            join (pandas.DataFrame): The joined pandas dataframe.
+            for_view (bool): If True, nothing will be saved, only the
+                figure will be viewed. If False, figure will be saved.
+                By default True.
+        """
         font = {'family' : self.font,
                 'weight' : 'normal',
                 'size'   : self.font_size}
@@ -321,9 +364,6 @@ class Animator():
                         s=30,
                         marker='>')
         
-        #start_time = int(pd.to_datetime(self.times[0]).strftime(self.temporal_freq))
-        #end_time = int(pd.to_datetime(self.times[-1]).strftime(self.temporal_freq))
-        
         ax[1].set_xlim(left=t1, right=t2)
         ax[1].set_ylim(bottom=0.45, top=0.55)
         for k in np.linspace(t1, t2, self.temporal_divisions):
@@ -346,6 +386,10 @@ class Animator():
     def check_join_dtype(
         self
     ):
+        """Check if unique id of both dataframes are of same dtypes.
+        
+        If not, then they will be converted to the same.
+        """
         shape_id_dtype = self.shape[self.shape_unique_column].dtype
         value_id_dtype = self.temporal[self.value_unique_column].dtype
         if shape_id_dtype != value_id_dtype:
@@ -387,6 +431,16 @@ class Animator():
         self,
         time
     ):
+        """
+        Merge shapefile with filtered temporal data based on unique
+        column.
+        
+        Args:
+            time (timedata[ns]): The numpy timedelta object.
+            
+        Returns:
+            pandas.DataFrame: Joined dataframe.
+        """
         # Get the data matching with the time
         time_data = self.temporal[self.temporal[self.time_column]==time]            
         # Merge with the shapefile
@@ -438,5 +492,3 @@ class Animator():
                 self.save_animation(duration=kwargs["duration"])
             elif file_type == 'mp4':
                 self.save_animation(fps=kwargs["fps"])
-            
-        #shutil.rmtree(self.temp_dir)

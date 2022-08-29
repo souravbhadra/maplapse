@@ -18,7 +18,8 @@
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)" href="examples/example-2.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,16 +37,17 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">maplapse package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-maplapse.maplapse">maplapse.maplapse module</a></li>
-<li><a class="reference internal" href="#module-maplapse">Module contents</a></li>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MapLapse API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-maplapse.maplapse">maplapse.maplapse module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-maplapse">Module contents</a></li>
 </ul>
 </li>
 </ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -78,6 +80,11 @@
 <section id="module-maplapse.maplapse">
 <span id="maplapse-maplapse-module"></span><h2>maplapse.maplapse module<a class="headerlink" href="#module-maplapse.maplapse" title="Permalink to this heading"></a></h2>
 <p>The main module of <cite>maplapse</cite> library.</p>
+<p>MapLapse simply uses an <cite>Animator</cite> object that defines the basic
+configuration of the maps to be created. It requires a shapefile, a
+csv file containing time-wise values for some theme, and a common id
+that can map the connection between the shapefile and the csv file.
+Then a method called <cite>animate</cite> can create an animated gif or mp4 file.</p>
 <p>Author: Sourav Bhadra
 Author Email: <a class="reference external" href="mailto:sbhadra019&#37;&#52;&#48;gmail&#46;com">sbhadra019<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
 <dl class="py class">
@@ -159,6 +166,18 @@ the <cite>proportional_circle</cite> map. By default 0.5.</p></li>
     plotting <cite>proportional_circle</cite>.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">maplapse</span> <span class="kn">import</span> <span class="n">Animator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">anim</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s1">&#39;shapefile_path.shp&#39;</span><span class="p">,</span>
+<span class="go">                    value=&#39;csv{path}.csv&#39;,</span>
+<span class="go">                    time_column=&#39;time_column&#39;,</span>
+<span class="go">                    data_column=&#39;data_column&#39;,</span>
+<span class="go">                    shape_unique_column=&#39;unique_column&#39;,</span>
+<span class="go">                    map_type=&#39;choropleth&#39;,</span>
+<span class="go">                    out_path=&#39;animation.gif&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">anim</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.animate">
 <span class="sig-name descname"><span class="pre">animate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.animate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.animate" title="Permalink to this definition"></a></dt>
@@ -181,42 +200,101 @@ output format is <cite>.mp4</cite>. By default 20.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.check_join_dtype">
 <span class="sig-name descname"><span class="pre">check_join_dtype</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.check_join_dtype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.check_join_dtype" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Check if unique id of both dataframes are of same dtypes.</p>
+<p>If not, then they will be converted to the same.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.choropleth">
 <span class="sig-name descname"><span class="pre">choropleth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.choropleth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.choropleth" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="maplapse.maplapse.Animator.create_temp_dir">
-<span class="sig-name descname"><span class="pre">create_temp_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.create_temp_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.create_temp_dir" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Creates a choropleth map axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>geopandas.GeoDataFrame</em>) – The geodataframe object.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axis</em>) – The ax, where the map will be drawn.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.join_shape_temporal">
 <span class="sig-name descname"><span class="pre">join_shape_temporal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.join_shape_temporal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.join_shape_temporal" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Merge shapefile with filtered temporal data based on unique
+column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>timedata</em><em>[</em><em>ns</em><em>]</em>) – The numpy timedelta object.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Joined dataframe.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.plot_frame">
 <span class="sig-name descname"><span class="pre">plot_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">for_view</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.plot_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.plot_frame" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Plot a single matplotlib figure as frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>timedata</em><em>[</em><em>ns</em><em>]</em>) – The numpy timedelta object.</p></li>
+<li><p><strong>join</strong> (<em>pandas.DataFrame</em>) – The joined pandas dataframe.</p></li>
+<li><p><strong>for_view</strong> (<em>bool</em>) – If True, nothing will be saved, only the
+figure will be viewed. If False, figure will be saved.
+By default True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.proportional_circle">
 <span class="sig-name descname"><span class="pre">proportional_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.proportional_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.proportional_circle" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Creates a proportional circle map axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>geopandas.GeoDataFrame</em>) – The geodataframe object.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axis</em>) – The ax, where the map will be drawn.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.save_animation">
 <span class="sig-name descname"><span class="pre">save_animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.save_animation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.save_animation" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Saves the files found in tempdir as animation.</p>
+<dl class="simple">
+<dt>Key Args:</dt><dd><p>duration (float): Duration of gif frames.
+fps (int): Frames per second of mp4 file.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.sort_filenames">
 <span class="sig-name descname"><span class="pre">sort_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/maplapse/maplapse.html#Animator.sort_filenames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maplapse.maplapse.Animator.sort_filenames" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sort the filenames of the exported figures according to
+their integer filenames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filenames</strong> (<em>list</em><em>(</em><em>str</em><em>)</em>) – Path of flinames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of sorted filenames.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="maplapse.maplapse.Animator.view_frame">
@@ -243,14 +321,16 @@ parameters to adjust the visualization options in the
 </section>
 <section id="module-maplapse">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-maplapse" title="Permalink to this heading"></a></h2>
-<p>Top-level package for geemap.</p>
+<p>Top-level package for maplapse.</p>
 </section>
 </section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples/example-2.html" class="btn btn-neutral float-left" title="Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

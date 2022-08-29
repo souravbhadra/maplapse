@@ -1,4 +1,4 @@
-"""Top-level package for geemap."""
+"""Top-level package for maplapse."""
 
 __author__ = """Sourav Bhadra"""
 __email__ = "sbhadra019@gmail.com"

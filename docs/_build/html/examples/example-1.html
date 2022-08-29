@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 1: Corn Yield Timelapse in the Midwest (Choropleth Map) &mdash; maplapse 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)" href="example-2.html" />
+    <link rel="prev" title="Examples" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> maplapse
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Example 1: Corn Yield Timelapse in the Midwest (Choropleth Map)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dataset">Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#animation">Animation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="example-2.html">Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../maplapse.html">MapLapse API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">maplapse</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Examples</a> &raquo;</li>
+      <li>Example 1: Corn Yield Timelapse in the Midwest (Choropleth Map)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/example-1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-1-corn-yield-timelapse-in-the-midwest-choropleth-map">
+<h1>Example 1: Corn Yield Timelapse in the Midwest (Choropleth Map)<a class="headerlink" href="#example-1-corn-yield-timelapse-in-the-midwest-choropleth-map" title="Permalink to this heading"></a></h1>
+<p>In this example, we will create an animation that shows how different
+counties in the Midwestern region of the United States have evolved in
+the overeall Corn Yield. The US Midwest is generally considered as the
+Corn Belt as most of the corn is produced in this region. The USDA also
+maintains a county level yield information for each year starting from
+as early as 1910. Therefore, the animated timelapse can be interesting
+in revealing the pattern of yield change over time.</p>
+<section id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this heading"></a></h2>
+<p>To make an animated map using <code class="docutils literal notranslate"><span class="pre">MapLapse</span></code>, we will need two types of
+information. First, a shapefile that shows the counties of the
+midwestern region in the US. Second, a <code class="docutils literal notranslate"><span class="pre">csv</span></code> file that has the
+temporal data to visualize. Another important information is to have a
+unique ID that can connect both the shapefile and the <code class="docutils literal notranslate"><span class="pre">csv</span></code> file.</p>
+<p>The dataset for this example can be downloaded from
+<a class="reference external" href="https://drive.google.com/drive/folders/1-QMiPf-STf8zTidPYEQl1DJouXsaTqi8?usp=sharing">here</a>.
+You will find a shapefile named <code class="docutils literal notranslate"><span class="pre">county_shape.shp</span></code> (which is
+downlaoded from the TIGER Census dataset) and a csv file called
+<code class="docutils literal notranslate"><span class="pre">century_data.csv</span></code>. The csv file was downloaded from <a class="reference external" href="https://www.nass.usda.gov/Data_and_Statistics/">USDA NASS Data
+and Statistics</a>
+website. You can choose from other agricultural statistics and rearrange
+the dataset accordingly. However, for this example the dataset is
+already processed in a nice csv file. Here, the unique ID to make a
+connection with the counties and the csv file is a combined field of
+State and County name. Here I concatenated the State and County name
+with a ’_’ in between them. However, you can do any way you want, but do
+this before workign with <code class="docutils literal notranslate"><span class="pre">MapLapse</span></code>.</p>
+</section>
+<section id="animation">
+<h2>Animation<a class="headerlink" href="#animation" title="Permalink to this heading"></a></h2>
+<p>Import the <code class="docutils literal notranslate"><span class="pre">Animator</span></code> object from <code class="docutils literal notranslate"><span class="pre">maplapse</span></code>.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">maplapse</span> <span class="kn">import</span> <span class="n">Animator</span>
+</pre></div>
+</div>
+<p>Define the <code class="docutils literal notranslate"><span class="pre">Animator</span></code> object with necessary parameters. Here we are
+doing a <code class="docutils literal notranslate"><span class="pre">choropleth</span></code> map.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/county_shape.shp&#39;</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/century_data.csv&#39;</span><span class="p">,</span>
+                <span class="n">time_column</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span>
+                <span class="n">data_column</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span>
+                <span class="n">shape_unique_column</span><span class="o">=</span><span class="s1">&#39;ST_CNT&#39;</span><span class="p">,</span>
+                <span class="n">map_type</span><span class="o">=</span><span class="s1">&#39;choropleth&#39;</span><span class="p">,</span>
+                <span class="n">out_path</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/animation.gif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the <code class="docutils literal notranslate"><span class="pre">animate</span></code> method is invoked on the <code class="docutils literal notranslate"><span class="pre">Animator</span></code> object, it
+process every frame and saves it as either a gif or mp4 video file.
+However, before doing that, we might want to check if the other
+components of the map looks ok by looking at individual frames. We can
+invoke the <code class="docutils literal notranslate"><span class="pre">view_frame</span></code> methods which just shows one frame and we can
+update our <code class="docutils literal notranslate"><span class="pre">Animator</span></code> object accordingly.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">view_frame</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/output_1_1.png" src="../_images/output_1_1.png" />
+<p>To me, everything looks good. However, before proceeding, we might want
+to refurbish several things, i.e., map title, legend title, and reducing
+the font size a little bit. Those options can executed as the optional
+kwargs. Let’s update the <code class="docutils literal notranslate"><span class="pre">Ainmator</span></code> based on those changes.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/county_shape.shp&#39;</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/century_data.csv&#39;</span><span class="p">,</span>
+                <span class="n">time_column</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span>
+                <span class="n">data_column</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span>
+                <span class="n">shape_unique_column</span><span class="o">=</span><span class="s1">&#39;ST_CNT&#39;</span><span class="p">,</span>
+                <span class="n">map_type</span><span class="o">=</span><span class="s1">&#39;choropleth&#39;</span><span class="p">,</span>
+                <span class="n">out_path</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/animation.gif&#39;</span><span class="p">,</span>
+                <span class="n">map_title</span><span class="o">=</span><span class="s2">&quot;Corn Yield Spatiotemporal Trend in US Midwest&quot;</span><span class="p">,</span>
+                <span class="n">legend_title</span><span class="o">=</span><span class="s1">&#39;Yield&#39;</span><span class="p">,</span>
+                <span class="n">font_size</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">view_frame</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/output_1_2.png" src="../_images/output_1_2.png" />
+<p>Much better. You can explore other optional features. Let’s change the
+colormap of the animation. By default, it is set at <code class="docutils literal notranslate"><span class="pre">rainbow</span></code>. But you
+can change it to anu matplotlib cmap styles. For an entire list, please
+see
+<a class="reference external" href="https://matplotlib.org/stable/tutorials/colors/colormaps.html">here</a>
+for reference. Now, let’s change it to <code class="docutils literal notranslate"><span class="pre">plasma</span></code>.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/county_shape.shp&#39;</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/century_data.csv&#39;</span><span class="p">,</span>
+                <span class="n">time_column</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span>
+                <span class="n">data_column</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span>
+                <span class="n">shape_unique_column</span><span class="o">=</span><span class="s1">&#39;ST_CNT&#39;</span><span class="p">,</span>
+                <span class="n">map_type</span><span class="o">=</span><span class="s1">&#39;choropleth&#39;</span><span class="p">,</span>
+                <span class="n">out_path</span><span class="o">=</span><span class="s1">&#39;/Users/sbhadra/maplapse/data/corn_yield/animation.gif&#39;</span><span class="p">,</span>
+                <span class="n">map_title</span><span class="o">=</span><span class="s2">&quot;Corn Yield Spatiotemporal Trend in US Midwest&quot;</span><span class="p">,</span>
+                <span class="n">legend_title</span><span class="o">=</span><span class="s1">&#39;Yield&#39;</span><span class="p">,</span>
+                <span class="n">font_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;plasma&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">view_frame</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/output_1_3.png" src="../_images/output_1_3.png" />
+<p>To create the final animation, we can either do a gif or mp4 video. The
+gif is great as it is lightweight, takes fewer time to creata and easy
+to share online. However, a caveat of gif is that it cannot handle lots
+of color variation. In that case, mp4 is the best option. We have
+already defined that the <code class="docutils literal notranslate"><span class="pre">out_path</span></code> argument as gif on its extension.
+However, to <code class="docutils literal notranslate"><span class="pre">animate</span></code>, we can control how fast the animation will look
+like.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>100%|██████████| 112/112 [00:58&lt;00:00,  1.92it/s]
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example-2.html" class="btn btn-neutral float-right" title="Example 2: COVID Timelapse of 2020-21 in the US (Proportional Circle Map)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sourav Bhadra.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

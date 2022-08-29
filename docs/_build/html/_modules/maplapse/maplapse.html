@@ -35,8 +35,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maplapse.html">MapLapse API Reference</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -64,6 +68,12 @@
   <h1>Source code for maplapse.maplapse</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">The main module of `maplapse` library.</span>
+
+<span class="sd">MapLapse simply uses an `Animator` object that defines the basic</span>
+<span class="sd">configuration of the maps to be created. It requires a shapefile, a</span>
+<span class="sd">csv file containing time-wise values for some theme, and a common id</span>
+<span class="sd">that can map the connection between the shapefile and the csv file. </span>
+<span class="sd">Then a method called `animate` can create an animated gif or mp4 file.</span>
 
 <span class="sd">Author: Sourav Bhadra</span>
 <span class="sd">Author Email: sbhadra019@gmail.com</span>
@@ -158,6 +168,17 @@
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: The `scale_factor` must be specified when </span>
 <span class="sd">            plotting `proportional_circle`.</span>
+<span class="sd">            </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from maplapse import Animator</span>
+<span class="sd">        &gt;&gt;&gt; anim = Animator(shape=&#39;shapefile_path.shp&#39;,</span>
+<span class="sd">                            value=&#39;csv{path}.csv&#39;,</span>
+<span class="sd">                            time_column=&#39;time_column&#39;,</span>
+<span class="sd">                            data_column=&#39;data_column&#39;,</span>
+<span class="sd">                            shape_unique_column=&#39;unique_column&#39;,</span>
+<span class="sd">                            map_type=&#39;choropleth&#39;,</span>
+<span class="sd">                            out_path=&#39;animation.gif&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; anim.animate(duration=0.5)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -243,19 +264,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">circle_alpha</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;circle_alpha&quot;</span><span class="p">]</span>
         
         
-        
-
-    
-<div class="viewcode-block" id="Animator.create_temp_dir"><a class="viewcode-back" href="../../maplapse.html#maplapse.maplapse.Animator.create_temp_dir">[docs]</a>    <span class="k">def</span> <span class="nf">create_temp_dir</span><span class="p">(</span>
-        <span class="bp">self</span>
-    <span class="p">):</span>
-        <span class="n">temp_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_path</span><span class="p">),</span>
-                                <span class="sa">f</span><span class="s1">&#39;temp&#39;</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
-        <span class="k">return</span> <span class="n">temp_dir</span></div>
     
     
 <div class="viewcode-block" id="Animator.sort_filenames"><a class="viewcode-back" href="../../maplapse.html#maplapse.maplapse.Animator.sort_filenames">[docs]</a>    <span class="k">def</span> <span class="nf">sort_filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filenames</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sort the filenames of the exported figures according to </span>
+<span class="sd">        their integer filenames.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            filenames (list(str)): Path of flinames.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of sorted filenames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
             <span class="n">data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="n">filename</span>
@@ -265,6 +285,12 @@
         
     
 <div class="viewcode-block" id="Animator.save_animation"><a class="viewcode-back" href="../../maplapse.html#maplapse.maplapse.Animator.save_animation">[docs]</a>    <span class="k">def</span> <span class="nf">save_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves the files found in tempdir as animation.</span>
+<span class="sd">        </span>
+<span class="sd">        Key Args:</span>
+<span class="sd">            duration (float): Duration of gif frames.</span>
+<span class="sd">            fps (int): Frames per second of mp4 file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">filenames</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_dir</span><span class="p">,</span> <span class="s1">&#39;*.png&#39;</span><span class="p">))</span>
         <span class="n">filenames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_filenames</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">imageio</span><span class="o">.</span><span class="n">get_writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
@@ -278,6 +304,12 @@
         <span class="n">gdf</span><span class="p">,</span>
         <span class="n">ax</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a choropleth map axis.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            gdf (geopandas.GeoDataFrame): The geodataframe object.</span>
+<span class="sd">            ax (matplotlib.axis): The ax, where the map will be drawn.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
             <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
             <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
@@ -313,6 +345,12 @@
         <span class="n">gdf</span><span class="p">,</span>
         <span class="n">ax</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a proportional circle map axis.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            gdf (geopandas.GeoDataFrame): The geodataframe object.</span>
+<span class="sd">            ax (matplotlib.axis): The ax, where the map will be drawn.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
     
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
@@ -339,6 +377,15 @@
         <span class="n">join</span><span class="p">,</span>
         <span class="n">for_view</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot a single matplotlib figure as frame.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            time (timedata[ns]): The numpy timedelta object.</span>
+<span class="sd">            join (pandas.DataFrame): The joined pandas dataframe.</span>
+<span class="sd">            for_view (bool): If True, nothing will be saved, only the</span>
+<span class="sd">                figure will be viewed. If False, figure will be saved.</span>
+<span class="sd">                By default True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;family&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">,</span>
                 <span class="s1">&#39;weight&#39;</span> <span class="p">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_size</span><span class="p">}</span>
@@ -385,9 +432,6 @@
                         <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
                         <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
         
-        <span class="c1">#start_time = int(pd.to_datetime(self.times[0]).strftime(self.temporal_freq))</span>
-        <span class="c1">#end_time = int(pd.to_datetime(self.times[-1]).strftime(self.temporal_freq))</span>
-        
         <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">t1</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">t2</span><span class="p">)</span>
         <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mf">0.55</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">temporal_divisions</span><span class="p">):</span>
@@ -410,6 +454,10 @@
 <div class="viewcode-block" id="Animator.check_join_dtype"><a class="viewcode-back" href="../../maplapse.html#maplapse.maplapse.Animator.check_join_dtype">[docs]</a>    <span class="k">def</span> <span class="nf">check_join_dtype</span><span class="p">(</span>
         <span class="bp">self</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if unique id of both dataframes are of same dtypes.</span>
+<span class="sd">        </span>
+<span class="sd">        If not, then they will be converted to the same.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">shape_id_dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">shape_unique_column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
         <span class="n">value_id_dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">temporal</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">value_unique_column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
         <span class="k">if</span> <span class="n">shape_id_dtype</span> <span class="o">!=</span> <span class="n">value_id_dtype</span><span class="p">:</span>
@@ -451,6 +499,16 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">time</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Merge shapefile with filtered temporal data based on unique</span>
+<span class="sd">        column.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            time (timedata[ns]): The numpy timedelta object.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            pandas.DataFrame: Joined dataframe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the data matching with the time</span>
         <span class="n">time_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">temporal</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">temporal</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">time_column</span><span class="p">]</span><span class="o">==</span><span class="n">time</span><span class="p">]</span>            
         <span class="c1"># Merge with the shapefile</span>
@@ -502,8 +560,6 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">save_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">])</span>
             <span class="k">elif</span> <span class="n">file_type</span> <span class="o">==</span> <span class="s1">&#39;mp4&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">save_animation</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;fps&quot;</span><span class="p">])</span></div></div>
-            
-        <span class="c1">#shutil.rmtree(self.temp_dir)</span>
 </pre></div>
 
            </div>
